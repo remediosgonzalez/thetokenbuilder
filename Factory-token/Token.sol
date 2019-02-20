@@ -1,4 +1,5 @@
 pragma solidity ^0.4.24;
+//import './ERC20Interface.sol';
 
 contract Token {
     
@@ -15,6 +16,7 @@ contract Token {
     }
     
     mapping (address=> PersonalToken) personalToken;
+    
     PersonalToken[] arrayPersonalToken;
     
     constructor()public {
@@ -22,7 +24,6 @@ contract Token {
     }
     
     function createToken(string _name, string _symbol, uint8 _decimals, uint256 _totalSupply, address account) internal{
-        
         personalToken[account]=PersonalToken(_name, _symbol, _decimals, _totalSupply, account, account);
         personalToken[account].balances[account] = _totalSupply;
         arrayPersonalToken.push(personalToken[account]);
@@ -47,5 +48,14 @@ contract Token {
         
     }
     
+    function setNewContract (address account, address newContract) internal onlyOwnerPersonal(msg.sender) returns(bool success) {
+        personalToken[account].connectorContract = newContract;
+        return true;
+    }
+    
+    modifier onlyOwnerPersonal(address account){
+        require(personalToken[account].owner==account && owner== msg.sender);
+        _;
+    }
     event CreateToken(string _name, string _symbol, uint8 _decimals, uint256 _totalSupply, address account);   
 }
