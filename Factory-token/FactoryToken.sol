@@ -3,10 +3,10 @@ import './ERC20Interface.sol';
 import './Token.sol';
 
 contract FactoryToken is ERC20Interface,Token{
-    string public name;
+    /*string public name;
     string public symbol;
     uint public decimals;
-    uint public supply;
+    uint public supply;*/
     address owner;
     
     mapping(address => uint) balances;
