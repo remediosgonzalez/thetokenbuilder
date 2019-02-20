@@ -53,6 +53,10 @@ contract Token {
         return true;
     }
     
+    function getPersonalToken() view public returns (address[]) {
+        return arrayPersonalToken;
+    }
+    
     modifier onlyOwnerPersonal(address account){
         require(personalToken[account].owner==account && owner== msg.sender);
         _;
