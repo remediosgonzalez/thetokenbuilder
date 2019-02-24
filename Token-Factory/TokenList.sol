@@ -7,14 +7,14 @@ contract TokenList is Owned{
     //address[] tokenList;
     mapping(address => address) public tokenList;
     
-    function addToken(address account) public onlyOwner{
-        require(!isToken(account), "Token already on list");
+    function addToken(address account) internal onlyOwner{
+        require(!existAddressToken(account), "Token already on list");
         
         tokenList[account]=account;
         emit AddToken(account, false, block.timestamp);
     }
 
-    function isToken(address account) private view returns (bool isIndeed){
+    function existAddressToken(address account) public view returns (bool isIndeed){
         if(tokenList[account] == account) return true;
         return (false);
     }
