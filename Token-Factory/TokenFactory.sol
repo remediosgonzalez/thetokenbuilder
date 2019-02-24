@@ -18,7 +18,7 @@ contract TokenFactory is WhiteList,TokenList{
     
     constructor () public {
         owner = msg.sender;
-        //tokenList = new TokenList();
+        tokenList = new TokenList();
     }
 
     
