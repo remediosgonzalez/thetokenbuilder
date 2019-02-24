@@ -17,13 +17,11 @@ contract WhiteList{
     }   
 
 
-   function addAccount(address account) public onlyOwner{
-      require(account != address(0));
-      if (!existAccount(account)){
+   function addAccount(address account) public onlyOwner notExistAccount(account){
+        require(account != address(0));
         mappingAccount[account]= AccountList(account,false,now);
         emit Account(account, false, now);
-      }
-     
+      
     }
 
     function modifyPay(address account, bool success) public onlyOwner onlyExistAccount(account){
@@ -32,32 +30,29 @@ contract WhiteList{
         
     }
 
-
-    function existAccount(address account) public view returns(bool success){
-        if (mappingAccount[account].account == account){
-          return true;
-        }else{
-          return false;
-        }
-        
+    function showAccount(address account) public view returns(address){
+        return mappingAccount[account].account;
     }
-
-    function isPay(address account) public view returns(bool success){
-        if( mappingAccount[account].pay==true) return true;
-        return false;
-    }
-
     /*********************MODIFICADORES*******************************************/
     modifier onlyOwner(){
         require (msg.sender == owner, "only owner can call this");
         _;
     }
 
-     modifier onlyExistAccount(address account){
+    modifier onlyExistAccount(address account){
         require(mappingAccount[account].account==account);
         _;
     }
-
+    
+    modifier notExistAccount(address account){
+        require(mappingAccount[account].account != account);
+        _;
+    }
+        
+    modifier onlyPay(address account){
+        require(mappingAccount[account].pay);
+        _;
+    }
    /********************EVENTOS*******************************************/
    event Account(address indexed account, bool pay, uint256 timestamp);
 
