@@ -26,7 +26,7 @@ contract TokenFactory is WhiteList, TokenList{
         tokenERC20 = new TokenERC20(name, symbol, decimals, totalSupply, account);
         //tokens[account]=address(tokenERC20)[];
         modifyPay(account,false);
-        addToken(address(account));        
+        addToken(account);        
         emit CreateToken(name,symbol,decimals,totalSupply,account);
         
     }
