@@ -9,7 +9,7 @@ contract TokenERC20 is Owned{
  
     string name;
     string symbol;
-    uint8 decimals;
+    uint256 decimals;
     uint256 supply;
     address connectorContract;
     
@@ -17,8 +17,8 @@ contract TokenERC20 is Owned{
     mapping(address => mapping(address => uint)) allowed;
     
    
-	constructor(string memory _name, string memory _symbol, uint8 _decimals, uint256 _supply, address account) public {
-	    owner = msg.sender;
+    constructor(string memory _name, string memory _symbol, uint256 _decimals, uint256 _supply, address account) public {
+        owner = msg.sender;
         name = _name;
         symbol=_symbol;
         decimals=_decimals;
