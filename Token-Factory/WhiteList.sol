@@ -21,13 +21,13 @@ contract WhiteList is Owned{
    function addAccount(address account) public onlyOwner notExistAccount(account){
         require(account != address(0));
         mappingAccount[account]= AccountList(account,false,block.timestamp);
-        emit Account(account, false, block.timestamp);
+        emit AddAccount(account, false, block.timestamp);
       
     }
     /* Cuando realizan el pago hay que marcarlo a true para que le deje generar su token*/
     function modifyPay(address account, bool success) public onlyOwner onlyExistAccount(account){
         mappingAccount[account].pay=success;
-        emit Account(account, success, block.timestamp);
+        emit ModifyPay(account, success, block.timestamp);
         
     }
     
@@ -52,7 +52,8 @@ contract WhiteList is Owned{
         _;
     }
    /********************EVENTOS*******************************************/
-   event Account(address indexed account, bool pay, uint256 timestamp);
+   event AddAccount(address indexed account, bool pay, uint256 timestamp);
+   event ModifyPay(address indexed account, bool pay, uint256 timestamp);
 
 
 }
