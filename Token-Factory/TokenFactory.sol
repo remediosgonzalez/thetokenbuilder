@@ -4,7 +4,7 @@ import './TokenList.sol';
 
 import "./WhiteList.sol";
 
-contract TokenFactory is WhiteList,TokenList,TokenERC20{
+contract TokenFactory is WhiteList,TokenList{
 
     address public owner;
     
@@ -22,7 +22,7 @@ contract TokenFactory is WhiteList,TokenList,TokenERC20{
     }
 
     
-    function createToken(string memory name, string memory symbol, uint8 decimals, uint256 totalSupply, address account) public { //onlyExistAccount(msg.sender) onlyPay(msg.sender){
+    function createToken(string memory name, string memory symbol, uint256 decimals, uint256 totalSupply, address account) public onlyExistAccount(account) onlyPay(account){
         tokenERC20 = new TokenERC20(name, symbol, decimals, totalSupply, account);
         tokenList.addToken(address(account));        
         emit CreateToken(name,symbol,decimals,totalSupply,account);
@@ -51,5 +51,5 @@ contract TokenFactory is WhiteList,TokenList,TokenERC20{
         revert();
     }*/
     
-    event CreateToken(string _name, string _symbol, uint8 _decimals, uint256 _totalSupply, address account);   
+    event CreateToken(string _name, string _symbol, uint256 _decimals, uint256 _totalSupply, address account);   
 }
