@@ -26,7 +26,7 @@ contract WhiteList{
      
     }
 
-    function modifyPay(address account, bool success) public onlyOwner{
+    function modifyPay(address account, bool success) public onlyOwner onlyExistAccount(account){
         mappingAccount[account].pay=success;
         emit Account(account, success, now);
         
@@ -53,7 +53,10 @@ contract WhiteList{
         _;
     }
 
-    
+     modifier onlyExistAccount(address account){
+        require(mappingAccount[account].account==account);
+        _;
+    }
 
    /********************EVENTOS*******************************************/
    event Account(address indexed account, bool pay, uint256 timestamp);
