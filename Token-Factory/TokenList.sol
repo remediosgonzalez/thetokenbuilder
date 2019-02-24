@@ -7,7 +7,7 @@ contract TokenList is Owned{
     address[] tokenList;
 
     function addToken(address token) public onlyOwner{
-        //require(!isToken(token), "Token already on list");
+        require(!isToken(token), "Token already on list");
         tokens[token] = tokenList.push(token) - 1;
     }
 
