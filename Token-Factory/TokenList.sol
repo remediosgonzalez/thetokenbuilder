@@ -4,24 +4,26 @@ import "./Owned.sol";
 
 contract TokenList is Owned{
     mapping (address => uint) tokens;
-    address[] tokenList;
-
+    //address[] tokenList;
+    mapping(address => address) public tokenList;
+    
     function addToken(address account) public onlyOwner{
         require(!isToken(account), "Token already on list");
-        tokens[account] = tokenList.push(account) - 1;
+        
+        tokenList[account]=account;
         emit AddToken(account, false, block.timestamp);
     }
 
     function isToken(address account) private view returns (bool isIndeed){
-        if(tokenList.length == 0) return false;
-        return (account == tokenList[tokens[account]]);
+        if(tokenList[account] == account) return true;
+        return (false);
     }
 
-    function getAllTokens() public view onlyOwner returns (address[] memory){
+    /*function getAllTokens() public view onlyOwner returns (address account){
         return tokenList;        
     }
-    
-    event AddToken(address indexed account, bool success, uint timestamp);
+    */
+    event AddToken(address indexed account, bool success, uint256 timestamp);
   
     
 }
