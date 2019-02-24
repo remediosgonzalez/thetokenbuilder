@@ -8,7 +8,7 @@ contract TokenFactory is WhiteList, TokenList{
 
     address public owner;
     
-    //TokenList tokenList;
+    TokenList tokenList;
     TokenERC20 tokenERC20;
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
@@ -18,7 +18,7 @@ contract TokenFactory is WhiteList, TokenList{
     
     constructor () public {
         owner = msg.sender;
-        //tokenList = new TokenList();
+        tokenList = new TokenList();
     }
 
     
@@ -26,11 +26,25 @@ contract TokenFactory is WhiteList, TokenList{
         tokenERC20 = new TokenERC20(name, symbol, decimals, totalSupply, account);
         //tokens[account]=address(tokenERC20)[];
         modifyPay(account,false);
-        addToken(account);        
+        addToken(address(tokenERC20));        
         emit CreateToken(name,symbol,decimals,totalSupply,account);
         
     }
     
-    
+    /** 
+    Lo llamamos nosotros con la direccion del futuro creador para dar permiso a la creacion
+    */
+    /*function allowCreateToken(address creator) public onlyOwner {
+        require(!canCreateToken[creator], "Already can create token");
+        canCreateToken[creator] = true;       
+    }*/
+
+    /** 
+    Devuelve la lista completa de direcciones de tokens creados
+    */
+    function getAllTokens() public view onlyOwner returns (address[] memory addressList){
+        addressList = getAllTokens();
+    }
+
     event CreateToken(string _name, string _symbol, uint256 _decimals, uint256 _totalSupply, address account);   
 }
