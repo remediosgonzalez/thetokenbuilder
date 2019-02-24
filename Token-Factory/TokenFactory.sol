@@ -1,10 +1,10 @@
 pragma solidity >=0.5.0;
 import './TokenERC20.sol';
-import './TokenList.sol';
+//import './TokenList.sol';
 
 import "./WhiteList.sol";
 
-contract TokenFactory is WhiteList,TokenList{
+contract TokenFactory is WhiteList{
 
     address public owner;
     
@@ -24,6 +24,7 @@ contract TokenFactory is WhiteList,TokenList{
     
     function createToken(string memory name, string memory symbol, uint256 decimals, uint256 totalSupply, address account) public onlyExistAccount(account) onlyPay(account){
         tokenERC20 = new TokenERC20(name, symbol, decimals, totalSupply, account);
+        modifyPay(account,false);
         //tokenList.addToken(address(account));        
         emit CreateToken(name,symbol,decimals,totalSupply,account);
         
