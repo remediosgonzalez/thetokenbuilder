@@ -20,13 +20,13 @@ contract WhiteList{
    function addAccount(address account) public onlyOwner notExistAccount(account){
         require(account != address(0));
         mappingAccount[account]= AccountList(account,false,now);
-        emit Account(account, false, now);
+        emit Account(account, false, block.timestamp);
       
     }
 
     function modifyPay(address account, bool success) public onlyOwner onlyExistAccount(account){
         mappingAccount[account].pay=success;
-        emit Account(account, success, now);
+        emit Account(account, success, block.timestamp);
         
     }
 
