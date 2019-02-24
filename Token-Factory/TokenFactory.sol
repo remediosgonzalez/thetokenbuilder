@@ -8,7 +8,7 @@ contract TokenFactory is WhiteList,TokenList{
 
     address public owner;
     
-    TokenList tokenList;
+    //TokenList tokenList;
     TokenERC20 tokenERC20;
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
@@ -18,13 +18,13 @@ contract TokenFactory is WhiteList,TokenList{
     
     constructor () public {
         owner = msg.sender;
-        tokenList = new TokenList();
+        //tokenList = new TokenList();
     }
 
     
     function createToken(string memory name, string memory symbol, uint256 decimals, uint256 totalSupply, address account) public onlyExistAccount(account) onlyPay(account){
         tokenERC20 = new TokenERC20(name, symbol, decimals, totalSupply, account);
-        tokenList.addToken(address(account));        
+        //tokenList.addToken(address(account));        
         emit CreateToken(name,symbol,decimals,totalSupply,account);
         
     }
@@ -32,9 +32,9 @@ contract TokenFactory is WhiteList,TokenList{
     /** 
     Devuelve la lista completa de direcciones de tokens creados
     */
-    function getAllTokens() public view onlyOwner returns (address[] memory addressList){
+    /*function getAllTokens() public view onlyOwner returns (address[] memory addressList){
         addressList = tokenList.getAllTokens();
-    }
+    }*/
     
    /* function setNewContract (address account, address newContract) internal onlyOwnerPersonal(msg.sender) returns(bool success) {
         personalToken[account].connectorContract = newContract;
