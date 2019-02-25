@@ -1,8 +1,9 @@
 pragma solidity >=0.5.0;
 import "./Owned.sol";
 import "./SafeMath.sol";
+import './Burnable.sol';
 
-contract TokenERC20 is Owned{
+contract TokenERC20 is Owned, Burnable, Pausable {
     using SafeMath for uint256;
      
     address owner;
@@ -39,7 +40,7 @@ contract TokenERC20 is Owned{
         return allowed[tokenOwner][spender];
     }
     
-    function transfer(address to, uint tokens) public returns (bool success){
+    function transfer(address to, uint tokens) public whenNotPaused returns (bool success){
         _transfer(msg.sender,to,tokens);
         return true;
         
@@ -51,7 +52,7 @@ contract TokenERC20 is Owned{
         return true;
     } 
     
-    function transferFrom(address from, address to, uint tokens) public returns (bool success){
+    function transferFrom(address from, address to, uint tokens) public whenNotPaused returns (bool success){
         require(allowed[from][msg.sender]>=tokens);
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
         emit Transfer(from, to, tokens);
@@ -91,6 +92,22 @@ contract TokenERC20 is Owned{
      
     function getApprove(address spender)public view returns(uint){
         return allowed[msg.sender][spender];
+    }
+
+    /*
+     * Quema de tokens
+     */
+
+     function burn(uint _value) public whenNotPaused returns (bool success) {
+        _burnTokens(msg.sender,_value);
+        return true;
+    }
+
+    function _burnTokens(address from, uint _value) internal {
+        require(balances[from] >= _value);              //Chequeamos que tenga la cantidad a quemar
+        balances[from] = balances[from].sub(_value);    // Extraemos del sender la cantidad a quemar
+        total_supply = total_supply.sub(_value);        // Actualizamos el supply
+        emit  Burned(from, _value);
     }
 
     
