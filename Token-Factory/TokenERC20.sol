@@ -2,6 +2,7 @@ pragma solidity >=0.5.0;
 import "./Owned.sol";
 import "./SafeMath.sol";
 import './Burnable.sol';
+import './Pausable.sol';
 
 contract TokenERC20 is Owned, Burnable, Pausable {
     using SafeMath for uint256;
@@ -106,7 +107,7 @@ contract TokenERC20 is Owned, Burnable, Pausable {
     function _burnTokens(address from, uint _value) internal {
         require(balances[from] >= _value);              //Chequeamos que tenga la cantidad a quemar
         balances[from] = balances[from].sub(_value);    // Extraemos del sender la cantidad a quemar
-        total_supply = total_supply.sub(_value);        // Actualizamos el supply
+        supply = supply.sub(_value);        // Actualizamos el supply
         emit  Burned(from, _value);
     }
 
