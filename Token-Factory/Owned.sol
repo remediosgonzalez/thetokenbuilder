@@ -26,10 +26,6 @@ contract Owned{
         _;
     }
 
-   /* modifier onlyPersonalOwner(address account){
-        require(personalToken[account].owner==msg.sender);
-        _;
-    }*/
     
     /********************EVENTOS*******************************************/
   event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
