@@ -30,14 +30,6 @@ contract TokenFactory is WhiteList, TokenList{
         emit CreateToken(name,symbol,decimals,totalSupply,account);
         
     }
-    
-    /** 
-    Lo llamamos nosotros con la direccion del futuro creador para dar permiso a la creacion
-    */
-    /*function allowCreateToken(address creator) public onlyOwner {
-        require(!canCreateToken[creator], "Already can create token");
-        canCreateToken[creator] = true;       
-    }*/
 
     /** 
     Devuelve la lista completa de direcciones de tokens creados
