@@ -20,7 +20,7 @@ contract TokenERC20 is Owned, Burnable, Pausable {
     
    
     constructor(string memory _name, string memory _symbol, uint256 _decimals, uint256 _supply, address account) public {
-        owner = msg.sender;
+        owner = account;
         name = _name;
         symbol=_symbol;
         decimals=_decimals;
